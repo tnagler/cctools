@@ -32,6 +32,10 @@
 #'
 #' @export
 cont_conv <- function(x, b = 0, ell = 5) {
+    if (NCOL(x) == 1)
+        x <- as.matrix(x)
+    stopifnot(class(x) %in% c("matrix", "data.frame"))
+    class_x <- class(x)[class(x) %in% c("matrix", "data.frame")]
     x <- as.matrix(x)
 
     # find out which variables are discrete
@@ -46,7 +50,9 @@ cont_conv <- function(x, b = 0, ell = 5) {
         x[, ints] <- x[, ints, drop = FALSE] + E
     }
 
-    # return convoluted vector
+    # return convoluted data
+    if (class_x == "data.frame")
+        x <- as.data.frame(x)
     x
 }
 
