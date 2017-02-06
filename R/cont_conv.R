@@ -1,8 +1,8 @@
 #' Continuous convolution
 #'
 #' Applies the continuous convolution trick, i.e. adding continuous noise to
-#' all discrete variables. If a variable should be treated as discrete, they must
-#' be declared as [ordered()].
+#' all discrete variables. If a variable should be treated as discrete, declare
+#' it as [ordered()].
 #'
 #' @param x data; numeric matrix or data frame.
 #' @param b scale parameter of the UPSB distribution (see, [dupsb()]).

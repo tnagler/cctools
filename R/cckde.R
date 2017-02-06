@@ -2,7 +2,7 @@
 #'
 #' The continuous convolution kernel density estimator is defined as the
 #' classical kernel density estimator based on continuously convoluted data (see
-#' [cont_conv()]). If a variable should be treated as discrete, declar it as
+#' [cont_conv()]). If a variable should be treated as discrete, declare it as
 #' [ordered()]. [dcckde()] evaluates the density.
 #'
 #' @param x a matrix or data frame containing the data.

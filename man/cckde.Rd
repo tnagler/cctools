@@ -30,7 +30,8 @@ continuous convolution (default parameters correspond to the}
 \description{
 The continuous convolution kernel density estimator is defined as the
 classical kernel density estimator based on continuously convoluted data (see
-\code{\link[=cont_conv]{cont_conv()}}). \code{\link[=dcckde]{dcckde()}} evaluates the density.
+\code{\link[=cont_conv]{cont_conv()}}). If a variable should be treated as discrete, declare it as
+\code{\link[=ordered]{ordered()}}. \code{\link[=dcckde]{dcckde()}} evaluates the density.
 }
 \examples{
 Z <- rbinom(100, 6, 0.3)  # discrete variable
@@ -42,8 +43,6 @@ sum(log(dcckde(dat, fit)))  # log likelihood
 
 }
 \references{
-Nagler, T. (2017).
-Nonparametric estimation of probability densities when some variables are
-discrete.
-Unpublished manuscript.
+Nagler, T. (2017). Nonparametric estimation of probability
+densities when some variables are discrete. Unpublished manuscript.
 }

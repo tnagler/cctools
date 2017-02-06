@@ -24,8 +24,8 @@ variables are assumed to be integer-valued.
 }
 \description{
 Applies the continuous convolution trick, i.e. adding continuous noise to
-all discrete variables. If a variable should be treated as discrete, they must
-be declared as \code{\link[=ordered]{ordered()}}.
+all discrete variables. If a variable should be treated as discrete, declare
+it as \code{\link[=ordered]{ordered()}}.
 }
 \examples{
 Z <- rbinom(100, 6, 0.3)  # discrete variable
