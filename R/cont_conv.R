@@ -1,7 +1,8 @@
 #' Continuous convolution
 #'
 #' Applies the continuous convolution trick, i.e. adding continuous noise to
-#' all discrete variables.
+#' all discrete variables. If a variable should be treated as discrete, they must
+#' be declared as [ordered()].
 #'
 #' @param x data; numeric matrix or data frame.
 #' @param b scale parameter of the UPSB distribution (see, [dupsb()]).
@@ -32,27 +33,24 @@
 #'
 #' @export
 cont_conv <- function(x, b = 0, ell = 5) {
-    if (NCOL(x) == 1)
-        x <- as.matrix(x)
-    stopifnot(class(x) %in% c("matrix", "data.frame"))
-    class_x <- class(x)[class(x) %in% c("matrix", "data.frame")]
-    x <- as.matrix(x)
-
-    # find out which variables are discrete
-    ints <- which(apply(x, 2, function(y) all(y == round(y))))
-
-    if (length(ints) > 0) {
-        # simulate continuous noise
-        E <- matrix(rupsb(nrow(x) * length(ints), b, ell),
-                    nrow = nrow(x),
-                    ncol = length(ints))
-        # add noise to discrete variables
-        x[, ints] <- x[, ints, drop = FALSE] + E
-    }
-
-    # return convoluted data
-    if (class_x == "data.frame")
+    if (is.numeric(x))
+        return(x)
+    if (!inherits(x, "data.frame"))
         x <- as.data.frame(x)
-    x
+    as.data.frame(sapply(x, cont_conv_one, b = b, ell = ell))
+}
+
+cont_conv_one <- function(x, b, ell) {
+    if (is.numeric(x)) {
+        return(x)
+    } else if (is.ordered(x)) {
+        return(as.numeric(x) + rupsb(length(x), b, ell))
+    } else if (is.factor(x)) {
+        stop("x must be either numeric or ordered; \n",
+             "redefine the variables as ordered and/or ",
+             "call again with 'model.frame(~ x)' for dummy coding.")
+    } else {
+        stop("x has unsupported type ", class(x))
+    }
 }
 

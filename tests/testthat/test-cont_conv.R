@@ -1,27 +1,33 @@
-context("Continuous convolution")
+context("Continuous convolution (cont_cov)")
 
 # dummy data
-dat <- cbind(
-    Z1 = rbinom(10, 5, 0.5),
+dat <- data.frame(
+    Z1 = as.ordered(rbinom(10, 5, 0.5)),
     X1 = rnorm(10),
-    Z2 = rpois(10, 1),
+    Z2 = as.ordered(rpois(10, 1)),
     X2 = rexp(10)
 )
-# parameter scenarios
-bs <- c(0, 0.2)
-ells <- c(0, 5, 500)
 
-for (bb in bs) {
-    for (ll in ells) {
-        par_msg <- paste0("b = ", bb, ", ell = ", ll)
-        cc_dat <- cont_conv(dat, b = bb, ell = ll)
-        test_that(
-            "Only affects discrete variables",
-            expect_identical(cc_dat[, c(2, 4)], dat[, c(2, 4)], info = par_msg)
-        )
-        test_that(
-            "Catches all discrete variables",
-            expect_equal(sum(cc_dat[, c(1, 3)] == dat[, c(1, 3)]), 0, info = par_msg)
-        )
-    }
-}
+test_that("does not add noise to continuous variables", {
+    dat_cc <- cont_conv(dat)
+    i_cnt <- which(sapply(dat, is.numeric))
+    sapply(i_cnt, function(i) expect_equal(dat[, i], dat_cc[ , i]))
+})
+
+test_that("does add noise to ordered variables", {
+    dat_cc <- cont_conv(dat)
+    i_cnt <- which(sapply(dat, is.ordered))
+    sapply(i_cnt, function(i) expect_false(all(dat[, i] == dat_cc[ , i])))
+})
+
+test_that("preserves input type", {
+    expect_equal(class(dat), class(cont_conv(dat)))
+    dat_num <- sapply(dat, as.numeric)
+    expect_equal(class(dat), class(cont_conv(dat)))
+})
+
+test_that("throws an error message for factors", {
+    dat_with_fct <- dat
+    dat_with_fct$F1 <- as.factor(1:10)
+    expect_error(cont_conv(dat_with_fct))
+})
