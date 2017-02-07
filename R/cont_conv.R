@@ -10,6 +10,7 @@
 #' The estimator uses the Epanechnikov kernel for smoothing and the UPSB for
 #' continuous convolution (default parameters correspond to the
 #' \eqn{U[-0.5, 0.5]} distribution).
+#' @param ... unused.
 #'
 #' @return Continuosly convoluted random vector.
 #'
@@ -32,7 +33,7 @@
 #' points(cont_conv(dat), col = 2)
 #'
 #' @export
-cont_conv <- function(x, b = 0, ell = 5) {
+cont_conv <- function(x, b = 0, ell = 5, ....) {
     if (is.numeric(x))
         return(x)
     if (!inherits(x, "data.frame"))

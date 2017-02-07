@@ -4,7 +4,7 @@
 \alias{cont_conv}
 \title{Continuous convolution}
 \usage{
-cont_conv(x, b = 0, ell = 5)
+cont_conv(x, b = 0, ell = 5, ....)
 }
 \arguments{
 \item{x}{data; numeric matrix or data frame.}
@@ -15,6 +15,8 @@ cont_conv(x, b = 0, ell = 5)
 The estimator uses the Epanechnikov kernel for smoothing and the UPSB for
 continuous convolution (default parameters correspond to the
 \eqn{U[-0.5, 0.5]} distribution).}
+
+\item{...}{unused.}
 }
 \value{
 Continuosly convoluted random vector.
