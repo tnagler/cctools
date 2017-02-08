@@ -3,14 +3,17 @@
 \name{cckde}
 \alias{cckde}
 \alias{dcckde}
+\alias{predict.cckde}
 \title{Continuous convolution density estimator}
 \usage{
-cckde(x, bw = NULL, mult = 1, b = 0, ell = 0.5)
+cckde(x, bw = NULL, mult = 1, theta = 0, nu = 0.5)
 
-dcckde(x, obj)
+dcckde(x, object)
+
+\method{predict}{cckde}(object, newdata, ...)
 }
 \arguments{
-\item{x}{a matrix or data frame containing the data.}
+\item{x}{a matrix or data frame containing the data (or evaluation points).}
 
 \item{bw}{vector of bandwidth parameter; if \code{NULL}, the bandwidths are
 selected automatically by likelihood cross validation.}
@@ -19,19 +22,27 @@ selected automatically by likelihood cross validation.}
 such. Each bandwidth parameter is multiplied with the corresponding
 multiplier.}
 
-\item{b}{scale parameter of the UPSB distribution (see, \code{\link[=dupsb]{dupsb()}}).}
+\item{theta}{scale parameter of the USB distribution (see, \code{\link[=dusb]{dusb()}}).}
 
-\item{ell}{smoothness parameter of the UPSB distribution (see, \code{\link[=dupsb]{dupsb()}}).
+\item{nu}{smoothness parameter of the USB distribution (see, \code{\link[=dusb]{dusb()}}).
 The estimator uses the Epanechnikov kernel for smoothing and the UPSB for
 continuous convolution (default parameters correspond to the}
 
-\item{obj}{\code{cckde} object.}
+\item{object}{\code{cckde} object.}
+
+\item{newdata}{matrix or data frame containing evaluation points}
+
+\item{...}{unused.}
 }
 \description{
 The continuous convolution kernel density estimator is defined as the
 classical kernel density estimator based on continuously convoluted data (see
-\code{\link[=cont_conv]{cont_conv()}}). If a variable should be treated as discrete, declare it as
-\code{\link[=ordered]{ordered()}}. \code{\link[=dcckde]{dcckde()}} evaluates the density.
+\code{\link[=cont_conv]{cont_conv()}}). \code{\link[=cckde]{cckde()}} fits the estimator (including bandwidth selection),
+\code{\link[=dcckde]{dcckde()}} and \code{\link[=predict.cckde]{predict.cckde()}} can be used to evaluate the estimator.
+}
+\details{
+If a variable should be treated as ordered discrete, declare it as
+\code{\link[=ordered]{ordered()}}, factors are expanded into discrete dummy codings.
 }
 \examples{
 Z <- rbinom(100, 6, 0.3)  # discrete variable

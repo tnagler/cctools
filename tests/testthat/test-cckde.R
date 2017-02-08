@@ -2,16 +2,18 @@ context("Continuous convolution kernel density estimator")
 
 # dummy data
 dat <- data.frame(
+    F1 = factor(rbinom(10, 4, 0.1), 0:4),
     Z1 = as.ordered(rbinom(10, 5, 0.5)),
-    X1 = rnorm(10),
     Z2 = as.ordered(rpois(10, 1)),
+    X1 = rnorm(10),
     X2 = rexp(10)
 )
+
 set.seed(1)  # because continuously convoluted data is random
 fit <- cckde(dat)
 
 test_that("Recognizes discrete variables", {
-    expect_equal(length(fit$i_ord), 2)
+    expect_length(attr(fit$x_cc, "i_disc"), 6)
 })
 
 test_that("Works with numeric and data.frame input", {
@@ -20,9 +22,9 @@ test_that("Works with numeric and data.frame input", {
 
 test_that("bw parameter works", {
     expect_error(cckde(dat, bw = 0))
-    expect_error(cckde(dat, bw = rep(0, 4)))
-    new_fit <- cckde(dat, bw = rep(0.5, 4))
-    expect_equal(new_fit$bw, rep(0.5, 4))
+    expect_error(cckde(dat, bw = rep(0, 8)))
+    new_fit <- cckde(dat, bw = rep(0.5, 8))
+    expect_equal(new_fit$bw, rep(0.5, 8))
 })
 
 test_that("mult parameter works", {
@@ -31,8 +33,8 @@ test_that("mult parameter works", {
     new_fit <- cckde(dat, mult = 2)
     expect_equal(2 * fit$bw, new_fit$bw)
     set.seed(1)
-    new_fit <- cckde(dat, mult = 1:4)
-    expect_equal(1:4 * fit$bw, new_fit$bw)
+    new_fit <- cckde(dat, mult = 1:8)
+    expect_equal(1:8 * fit$bw, new_fit$bw)
 })
 
 test_that("Density works", {

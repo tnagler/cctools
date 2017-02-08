@@ -2,23 +2,27 @@
 #'
 #' The continuous convolution kernel density estimator is defined as the
 #' classical kernel density estimator based on continuously convoluted data (see
-#' [cont_conv()]). If a variable should be treated as discrete, declare it as
-#' [ordered()]. [dcckde()] evaluates the density.
+#' [cont_conv()]). [cckde()] fits the estimator (including bandwidth selection),
+#' [dcckde()] and [predict.cckde()] can be used to evaluate the estimator.
 #'
-#' @param x a matrix or data frame containing the data.
+#' @param x a matrix or data frame containing the data (or evaluation points).
 #' @param bw vector of bandwidth parameter; if `NULL`, the bandwidths are
 #'   selected automatically by likelihood cross validation.
 #' @param mult bandwidth multiplier; either a positive number or a vector of
 #'   such. Each bandwidth parameter is multiplied with the corresponding
 #'   multiplier.
-#' @param b scale parameter of the UPSB distribution (see, [dupsb()]).
-#' @param ell smoothness parameter of the UPSB distribution (see, [dupsb()]).
+#' @param theta scale parameter of the USB distribution (see, [dusb()]).
+#' @param nu smoothness parameter of the USB distribution (see, [dusb()]).
 #'   The estimator uses the Epanechnikov kernel for smoothing and the UPSB for
 #'   continuous convolution (default parameters correspond to the
-#' @param obj `cckde` object.
+#' @param object `cckde` object.
+#' @param newdata matrix or data frame containing evaluation points
+#'
+#' @details If a variable should be treated as ordered discrete, declare it as
+#'   [ordered()], factors are expanded into discrete dummy codings.
 #'
 #' @references Nagler, T. (2017). Nonparametric estimation of probability
-#' densities when some variables are discrete. Unpublished manuscript.
+#'   densities when some variables are discrete. Unpublished manuscript.
 #'
 #' @examples
 #' Z <- rbinom(100, 6, 0.3)  # discrete variable
@@ -30,53 +34,47 @@
 #'
 #' @export
 #' @useDynLib cctools
-cckde <- function(x, bw = NULL, mult = 1, b = 0, ell = 0.5) {
+cckde <- function(x, bw = NULL, mult = 1, theta = 0, nu = 0.5) {
     # continuous convolution of the data
-    x_cc <- cont_conv(x, b = b, ell = ell)
-    if (is.numeric(x_cc)) {
-        i_ord <- integer(0)
-    } else {
-        # find the discrete variabels
-        i_ord <- which(sapply(x, is.ordered))
-        # set type for C++ interface
-        x <- sapply(x, as.numeric)
-        x_cc <- as.matrix(x_cc)
-    }
-
+    x_cc <- cont_conv(x, theta = theta, nu = nu)
+    x_eval <- cont_conv(x, theta = theta, nu = nu, for_eval = TRUE)
     # find optimal bandwidths using likelihood cross-validation
     if (is.null(bw)) {
-        bw <- select_bw(x, x_cc, i_ord, bw_min = 0.5 - b)
+        bw <- select_bw(x_eval, x_cc, attr(x_cc, "i_disc"), bw_min = 0.5 - nu)
     } else {
-        stopifnot(ncol(x) == length(bw))
+        stopifnot(length(bw) == ncol(x_cc))
         stopifnot(all(bw > 0))
     }
 
     # adjust bandwidth parameters
     stopifnot(all(mult > 0))
-    stopifnot(length(mult) %in% c(1, ncol(x)))
+    stopifnot(length(mult) %in% c(1, ncol(x_cc)))
     bw <- mult * bw
 
     # create and return cckde object
     structure(
-        list(x = x, x_cc = x_cc, i_ord = i_ord, bw = bw, b = b, ell = ell),
+        list(x_cc = x_cc, bw = bw, theta = theta, ell = nu),
         class = "cckde"
     )
 }
 
 #' @rdname cckde
 #' @export
-dcckde <- function(x, obj) {
-    stopifnot(inherits(obj, "cckde"))
-    x <- if (is.matrix(x)) x else sapply(x, as.numeric)
-    if (NCOL(x) == 1)
-        x <- t(x)
-    stopifnot(ncol(x) == ncol(obj$x))
-
-    c(eval_mvkde(x, as.matrix(obj$x_cc), obj$bw))
+dcckde <- function(x, object) {
+    stopifnot(inherits(object, "cckde"))
+    x <- if (is.numeric(x)) x else expand_as_numeric(x)
+    c(eval_mvkde(x, as.matrix(object$x_cc), object$bw))
 }
+
+#' @rdname cckde
+#' @param ... unused.
+#' @export
+predict.cckde <- function(object, newdata, ...)
+    dcckde(newdata, object)
 
 #' @importFrom stats IQR optim pbeta rbeta runif sd
 #' @importFrom Rcpp evalCpp
+#' @noRd
 select_bw <- function(x, x_cc, i_ord = integer(0), bw_min = 0) {
     n <- nrow(x)
     d <- ncol(x)
