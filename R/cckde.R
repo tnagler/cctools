@@ -44,19 +44,17 @@ cckde <- function(x, bw = NULL, mult = 1, theta = 0, nu = 0.5) {
     # continuous convolution of the data
     x_cc <- cont_conv(x, theta = theta, nu = nu)
 
-    # find optimal bandwidths using likelihood cross-validation
     if (is.null(bw)) {
+        # find optimal bandwidths using likelihood cross-validation
         x_eval <- expand_as_numeric(x)
         bw <- select_bw(x_eval, x_cc, attr(x_cc, "i_disc"), bw_min = 0.5 - nu)
-    } else {
-        stopifnot(length(bw) == ncol(x_cc))
-        stopifnot(all(bw > 0))
     }
 
-    # adjust bandwidth parameters
+    # adjust bws
+    stopifnot(all(bw > 0))
     stopifnot(all(mult > 0))
-    stopifnot(length(mult) %in% c(1, ncol(x_cc)))
-    bw <- mult * bw
+    bw <- expand_vec(bw, x) * expand_vec(mult, x)
+    names(bw) <- colnames(x_cc)
 
     # create and return cckde object
     structure(
@@ -65,15 +63,6 @@ cckde <- function(x, bw = NULL, mult = 1, theta = 0, nu = 0.5) {
     )
 }
 
-expand_bw <- function(bw, x) {
-    sapply(seq_along(bw), function(i) {
-        if (is.factor(x[, i])) {
-            rep(bw[i], length(levels(x[, i])))
-        } else {
-            bw[i]
-        }
-    })
-}
 
 #' @rdname cckde
 #' @export

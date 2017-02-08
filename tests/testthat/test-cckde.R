@@ -23,8 +23,10 @@ test_that("Works with numeric and data.frame input", {
 test_that("bw parameter works", {
     expect_error(cckde(dat, bw = 0))
     expect_error(cckde(dat, bw = rep(0, 8)))
-    new_fit <- cckde(dat, bw = rep(0.5, 8))
-    expect_equal(new_fit$bw, rep(0.5, 8))
+    bw <- rep(0.5, 8)
+    names(bw) <- expand_vec(names(dat), dat)
+    new_fit <- cckde(dat, bw = bw)
+    expect_equal(new_fit$bw, bw)
 })
 
 test_that("mult parameter works", {
