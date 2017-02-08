@@ -4,31 +4,34 @@
 \alias{cont_conv}
 \title{Continuous convolution}
 \usage{
-cont_conv(x, b = 0, ell = 5, ....)
+cont_conv(x, theta = 0, nu = 5, eval = FALSE, ...)
 }
 \arguments{
 \item{x}{data; numeric matrix or data frame.}
 
-\item{b}{scale parameter of the UPSB distribution (see, \code{\link[=dupsb]{dupsb()}}).}
+\item{theta}{scale parameter of the USB distribution (see, \code{\link[=dusb]{dusb()}}).}
 
-\item{ell}{smoothness parameter of the UPSB distribution (see, \code{\link[=dupsb]{dupsb()}}).
-The estimator uses the Epanechnikov kernel for smoothing and the UPSB for
-continuous convolution (default parameters correspond to the
-\eqn{U[-0.5, 0.5]} distribution).}
+\item{nu}{smoothness parameter of the USB distribution (see, \code{\link[=dusb]{dusb()}}). The
+estimator uses the Epanechnikov kernel for smoothing and the USB for
+continuous convolution (default parameters correspond to the \eqn{U[-0.5,
+  0.5]} distribution).}
 
-\item{...}{unused.}
+\item{eval}{logical; if \code{TRUE}, no noise is added (useful for evaluating an
+estimator; adding noise is only useful for estimation. The output is a
+matrix rather}
 }
 \value{
 A data frame with noise added to each discrete variable (ordered
 columns).
-
-The UPSB distribution (\code{\link[=dupsb]{dupsb()}}) is used as the noise distribution. Discrete
-variables are assumed to be integer-valued.
 }
 \description{
-Applies the continuous convolution trick, i.e. adding continuous noise to
-all discrete variables. If a variable should be treated as discrete, declare
-it as \code{\link[=ordered]{ordered()}}.
+Applies the continuous convolution trick, i.e. adding continuous noise to all
+discrete variables. If a variable should be treated as discrete, declare it
+as \code{\link[=ordered]{ordered()}}. Factors are expanded into binary dummy codes.
+}
+\details{
+The UPSB distribution (\code{\link[=dusb]{dusb()}}) is used as the noise distribution.
+Discrete variables are assumed to be integer-valued.
 }
 \examples{
 Z <- rbinom(100, 6, 0.3)  # discrete variable
@@ -41,8 +44,6 @@ points(cont_conv(dat), col = 2)
 
 }
 \references{
-Nagler, T. (2017).
-Nonparametric estimation of probability densities when some variables are
-discrete.
-Unpublished manuscript.
+Nagler, T. (2017). Nonparametric estimation of probability
+densities when some variables are discrete. Unpublished manuscript.
 }
