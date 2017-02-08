@@ -45,12 +45,18 @@ If a variable should be treated as ordered discrete, declare it as
 \code{\link[=ordered]{ordered()}}, factors are expanded into discrete dummy codings.
 }
 \examples{
-Z <- rbinom(100, 6, 0.3)  # discrete variable
-X <- rexp(100, 5)         # continuous variable
-dat <- cbind(Z, X)
+# dummy data with discrete variables
+dat <- data.frame(
+    F1 = factor(rbinom(10, 4, 0.1), 0:4),
+    Z1 = as.ordered(rbinom(10, 5, 0.5)),
+    Z2 = as.ordered(rpois(10, 1)),
+    X1 = rnorm(10),
+    X2 = rexp(10)
+)
 
-fit <- cckde(dat)  # continuous convolution estimate
-sum(log(dcckde(dat, fit)))  # log likelihood
+fit <- cckde(dat)  # fit estimator
+dcckde(dat, fit)   # evaluate density
+predict(fit, dat)  # equivalent
 
 }
 \references{

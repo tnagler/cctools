@@ -1,4 +1,4 @@
-#' UPSB distribution
+#' Uniform scaled beta distribution
 #'
 #' The uniform scaled beta (USB) distribution describes the distribution of
 #' the random variable
@@ -25,7 +25,7 @@
 #' lines(sq, dusb(sq, theta = 0.25, nu = 10), col = 3)
 #'
 #' # simulate from the distribution
-#' x <- rupsb(100, theta = 0.3, nu = 0)
+#' x <- rusb(100, theta = 0.3, nu = 0)
 #'
 #' @export
 dusb <- function(x, theta = 0, nu = 5) {

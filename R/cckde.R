@@ -25,21 +25,28 @@
 #'   densities when some variables are discrete. Unpublished manuscript.
 #'
 #' @examples
-#' Z <- rbinom(100, 6, 0.3)  # discrete variable
-#' X <- rexp(100, 5)         # continuous variable
-#' dat <- cbind(Z, X)
+#' # dummy data with discrete variables
+#' dat <- data.frame(
+#'     F1 = factor(rbinom(10, 4, 0.1), 0:4),
+#'     Z1 = as.ordered(rbinom(10, 5, 0.5)),
+#'     Z2 = as.ordered(rpois(10, 1)),
+#'     X1 = rnorm(10),
+#'     X2 = rexp(10)
+#' )
 #'
-#' fit <- cckde(dat)  # continuous convolution estimate
-#' sum(log(dcckde(dat, fit)))  # log likelihood
+#' fit <- cckde(dat)  # fit estimator
+#' dcckde(dat, fit)   # evaluate density
+#' predict(fit, dat)  # equivalent
 #'
 #' @export
 #' @useDynLib cctools
 cckde <- function(x, bw = NULL, mult = 1, theta = 0, nu = 0.5) {
     # continuous convolution of the data
     x_cc <- cont_conv(x, theta = theta, nu = nu)
-    x_eval <- cont_conv(x, theta = theta, nu = nu, for_eval = TRUE)
+
     # find optimal bandwidths using likelihood cross-validation
     if (is.null(bw)) {
+        x_eval <- expand_as_numeric(x)
         bw <- select_bw(x_eval, x_cc, attr(x_cc, "i_disc"), bw_min = 0.5 - nu)
     } else {
         stopifnot(length(bw) == ncol(x_cc))
@@ -58,12 +65,26 @@ cckde <- function(x, bw = NULL, mult = 1, theta = 0, nu = 0.5) {
     )
 }
 
+expand_bw <- function(bw, x) {
+    sapply(seq_along(bw), function(i) {
+        if (is.factor(x[, i])) {
+            rep(bw[i], length(levels(x[, i])))
+        } else {
+            bw[i]
+        }
+    })
+}
+
 #' @rdname cckde
 #' @export
 dcckde <- function(x, object) {
     stopifnot(inherits(object, "cckde"))
-    x <- if (is.numeric(x)) x else expand_as_numeric(x)
-    c(eval_mvkde(x, as.matrix(object$x_cc), object$bw))
+    # must be numeric, factors are expanded
+    x <- expand_as_numeric(x)
+    # variables must be in same order
+    x <- x[, colnames(object$x_cc), drop = FALSE]
+
+    c(eval_mvkde(x, object$x_cc, object$bw))
 }
 
 #' @rdname cckde

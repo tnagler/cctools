@@ -4,7 +4,7 @@
 \alias{cont_conv}
 \title{Continuous convolution}
 \usage{
-cont_conv(x, theta = 0, nu = 5, eval = FALSE, ...)
+cont_conv(x, theta = 0, nu = 5)
 }
 \arguments{
 \item{x}{data; numeric matrix or data frame.}
@@ -15,10 +15,6 @@ cont_conv(x, theta = 0, nu = 5, eval = FALSE, ...)
 estimator uses the Epanechnikov kernel for smoothing and the USB for
 continuous convolution (default parameters correspond to the \eqn{U[-0.5,
   0.5]} distribution).}
-
-\item{eval}{logical; if \code{TRUE}, no noise is added (useful for evaluating an
-estimator; adding noise is only useful for estimation. The output is a
-matrix rather}
 }
 \value{
 A data frame with noise added to each discrete variable (ordered
@@ -27,20 +23,25 @@ columns).
 \description{
 Applies the continuous convolution trick, i.e. adding continuous noise to all
 discrete variables. If a variable should be treated as discrete, declare it
-as \code{\link[=ordered]{ordered()}}. Factors are expanded into binary dummy codes.
+as \code{\link[=ordered]{ordered()}} (passed to \code{\link[=expand_as_numeric]{expand_as_numeric()}}).
 }
 \details{
 The UPSB distribution (\code{\link[=dusb]{dusb()}}) is used as the noise distribution.
 Discrete variables are assumed to be integer-valued.
 }
 \examples{
-Z <- rbinom(100, 6, 0.3)  # discrete variable
-X <- rexp(1000, 5)        # continuous variable
-dat <- cbind(Z, X)
+# dummy data with discrete variables
+dat <- data.frame(
+    F1 = factor(rbinom(100, 4, 0.1), 0:4),
+    Z1 = as.ordered(rbinom(100, 5, 0.5)),
+    Z2 = as.ordered(rpois(100, 1)),
+    X1 = rnorm(100),
+    X2 = rexp(100)
+)
 
-# plot original and continuously convoluted data
-plot(dat)
-points(cont_conv(dat), col = 2)
+pairs(dat)
+pairs(expand_as_numeric(dat))  # expanded variables without noise
+pairs(cont_conv(dat))          # continuously convoluted data
 
 }
 \references{

@@ -3,7 +3,7 @@
 \name{dusb}
 \alias{dusb}
 \alias{rusb}
-\title{UPSB distribution}
+\title{Uniform scaled beta distribution}
 \usage{
 dusb(x, theta = 0, nu = 5)
 
@@ -33,7 +33,7 @@ lines(sq, dusb(sq, theta = 0.25), col = 2)
 lines(sq, dusb(sq, theta = 0.25, nu = 10), col = 3)
 
 # simulate from the distribution
-x <- rupsb(100, theta = 0.3, nu = 0)
+x <- rusb(100, theta = 0.3, nu = 0)
 
 }
 \references{
