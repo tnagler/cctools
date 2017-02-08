@@ -19,7 +19,8 @@ continuous convolution (default parameters correspond to the
 \item{...}{unused.}
 }
 \value{
-Continuosly convoluted random vector.
+A data frame with noise added to each discrete variable (ordered
+columns).
 
 The UPSB distribution (\code{\link[=dupsb]{dupsb()}}) is used as the noise distribution. Discrete
 variables are assumed to be integer-valued.

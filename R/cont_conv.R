@@ -12,7 +12,8 @@
 #' \eqn{U[-0.5, 0.5]} distribution).
 #' @param ... unused.
 #'
-#' @return Continuosly convoluted random vector.
+#' @return A data frame with noise added to each discrete variable (ordered
+#' columns).
 #'
 #' The UPSB distribution ([dupsb()]) is used as the noise distribution. Discrete
 #' variables are assumed to be integer-valued.
@@ -35,7 +36,7 @@
 #' @export
 cont_conv <- function(x, b = 0, ell = 5, ....) {
     if (is.numeric(x))
-        return(x)
+        return(as.data.frame(x))
     if (!inherits(x, "data.frame"))
         x <- as.data.frame(x)
     as.data.frame(sapply(x, cont_conv_one, b = b, ell = ell))
