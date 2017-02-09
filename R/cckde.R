@@ -90,7 +90,7 @@ select_bw <- function(x, x_cc, i_ord = integer(0), bw_min = 0) {
     d <- ncol(x)
 
     ## set lower bounds for the bandwidth of each variable
-    bw_lower <- numeric(d)
+    bw_lower <- rep(1e-5, d)
     bw_lower[i_ord] <- bw_min
 
     ## set starting values by normal reference rule

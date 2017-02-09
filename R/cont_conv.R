@@ -48,8 +48,10 @@ cc_add_noise <- function(x, theta = 0, nu = 5) {
     stopifnot(inherits(x, "expanded_as_numeric"))
     i_disc <- attr(x, "i_disc")
     n_disc <- length(i_disc)
-    if (n_disc > 1)
-        x[, i_disc] <- x[, i_disc] + rusb(n_disc * nrow(x), nrow(x), n_disc)
+    if (n_disc > 1) {
+        E <- matrix(rusb(n_disc * nrow(x), theta, nu), nrow(x), n_disc)
+        x[, i_disc] <- x[, i_disc] + E
+    }
 
     attr(x, "theta") <- theta
     attr(x, "nu") <- nu
