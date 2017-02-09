@@ -40,14 +40,14 @@
 #'
 #' @export
 #' @useDynLib cctools
-cckde <- function(x, bw = NULL, mult = 1, theta = 0, nu = 0.5) {
+cckde <- function(x, bw = NULL, mult = 1, theta = 0, nu = 5) {
     # continuous convolution of the data
     x_cc <- cont_conv(x, theta = theta, nu = nu)
 
     if (is.null(bw)) {
         # find optimal bandwidths using likelihood cross-validation
         x_eval <- expand_as_numeric(x)
-        bw <- select_bw(x_eval, x_cc, attr(x_cc, "i_disc"), bw_min = 0.5 - nu)
+        bw <- select_bw(x_eval, x_cc, attr(x_cc, "i_disc"), bw_min = 0.5 - theta)
     }
 
     # adjust bws
