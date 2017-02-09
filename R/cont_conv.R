@@ -50,6 +50,9 @@ cc_add_noise <- function(x, theta = 0, nu = 5) {
     n_disc <- length(i_disc)
     if (n_disc > 1)
         x[, i_disc] <- x[, i_disc] + rusb(n_disc * nrow(x), nrow(x), n_disc)
+
+    attr(x, "theta") <- theta
+    attr(x, "nu") <- nu
     x
 }
 
