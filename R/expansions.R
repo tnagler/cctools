@@ -31,14 +31,17 @@ expand_as_numeric <- function(x) {
         x <- as.data.frame(x, stringsAsFactors = FALSE)
     # which variables will be discrete in the output data frame?
     i_disc <- get_i_disc(x)
+    # levels and names of expanded variables
+    new_names <- expand_vec(names(x), x)
+    new_levels <- expanded_levels(x)
 
     # ordered -> integer, factors -> dummy coding
-    new_names <- expand_vec(names(x), x)
     x <- do.call(cbind, lapply(x, cc_prepare_one))
     colnames(x) <- new_names
 
     # indicate which variables are discrete
     attr(x, "i_disc") <- i_disc
+    attr(x, "levels") <- new_levels
     class(x) <- c("numeric", "matrix", "expanded_as_numeric")
 
     x
@@ -78,6 +81,15 @@ is_disc <- function(x) {
     } else {
         return(rep(TRUE, length(levels(x)) - 1))
     }
+}
+
+expanded_levels <- function(x) {
+    lvls <- lapply(x, function(y) {
+        if (is.numeric(y) | is.ordered(y))
+            return(list(levels(y)))
+        lapply(seq_along(levels(y)), function(l) as.character(0:1))
+    })
+    do.call(c, lvls)
 }
 
 
