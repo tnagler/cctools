@@ -10,6 +10,8 @@
 #'   estimator uses the Epanechnikov kernel for smoothing and the USB for
 #'   continuous convolution (default parameters correspond to the \eqn{U[-0.5,
 #'   0.5]} distribution).
+#' @param quasi logical indicating whether quasi random numbers sholuld be used
+#'   ([qrng::ghalton()]); only works for `theta = 0`.
 #'
 #' @return A data frame with noise added to each discrete variable (ordered
 #'   columns).
@@ -35,8 +37,8 @@
 #' pairs(cont_conv(dat))          # continuously convoluted data
 #'
 #' @export
-cont_conv <- function(x, theta = 0, nu = 5) {
-    cc_add_noise(expand_as_numeric(x))
+cont_conv <- function(x, theta = 0, nu = 5, quasi = TRUE) {
+    cc_add_noise(expand_as_numeric(x), theta, nu, quasi = quasi)
 }
 
 #' Add noise to discrete variables
@@ -44,12 +46,12 @@ cont_conv <- function(x, theta = 0, nu = 5) {
 #' @param x data matrix created by `expand_as_numeric()` (this is important,
 #'   because we need to know which variables are discrete).
 #' @noRd
-cc_add_noise <- function(x, theta = 0, nu = 5) {
+cc_add_noise <- function(x, theta = 0, nu = 5, quasi = FALSE) {
     stopifnot(inherits(x, "expanded_as_numeric"))
     i_disc <- attr(x, "i_disc")
     n_disc <- length(i_disc)
     if (n_disc > 1) {
-        E <- matrix(rusb(n_disc * nrow(x), theta, nu), nrow(x), n_disc)
+        E <- matrix(rusb(n_disc * nrow(x), theta, nu, quasi), nrow(x), n_disc)
         x[, i_disc] <- x[, i_disc] + E
     }
 

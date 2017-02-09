@@ -9,7 +9,6 @@
 #' @param x vector of quantiles.
 #' @param theta scale parameter of the USB distribution.
 #' @param nu smoothness parameter of the USB distribution.
-#' @param n number of observations.
 #'
 #' @references
 #' Nagler, T. (2017).
@@ -27,9 +26,11 @@
 #' # simulate from the distribution
 #' x <- rusb(100, theta = 0.3, nu = 0)
 #'
+#' @importFrom stats pbeta
 #' @export
 dusb <- function(x, theta = 0, nu = 5) {
     stopifnot(theta >= 0)
+    stopifnot(theta <= 0.5)
     a <- 0.5
     out <- numeric(length(x))
 
@@ -49,9 +50,29 @@ dusb <- function(x, theta = 0, nu = 5) {
 }
 
 #' @rdname dusb
+#' @param n number of observations.
+#' @param quasi logical indicating whether quasi random numbers sholuld be used
+#'   ([qrng::ghalton()]); only works for `theta = 0`.
+#' @importFrom qrng ghalton
+#' @importFrom stats qbeta rbeta
 #' @export
-rusb <- function(n, theta = 0, nu = 5) {
+rusb <- function(n, theta = 0, nu = 5, quasi = FALSE) {
     stopifnot(theta >= 0)
+    stopifnot(theta <= 0.5)
     a <- 0.5
-    (runif(n) - 0.5) * 2 * a + 2 * theta * (rbeta(n, nu, nu) - 0.5)
+    if (!quasi) {
+        x <- (runif(n) - 0.5) * 2 * a
+        if (theta > 0)
+            x <- x + 2 * theta * (rbeta(n, nu, nu) - 0.5)
+    } else {
+        if (theta == 0) {
+            x <- qrng::ghalton(n, d = 1) * 2 * a
+        } else {
+            u <- qrng::ghalton(2 * n, d = 1) * 2 * a
+            u <- u[sample(2 * n)]
+            x <- u[seq.int(n)] + 2 * theta * (qbeta(u[-seq.int(n)], nu, nu) - 0.5)
+        }
+    }
+
+    x
 }

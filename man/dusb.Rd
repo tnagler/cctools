@@ -7,7 +7,7 @@
 \usage{
 dusb(x, theta = 0, nu = 5)
 
-rusb(n, theta = 0, nu = 5)
+rusb(n, theta = 0, nu = 5, quasi = FALSE)
 }
 \arguments{
 \item{x}{vector of quantiles.}
@@ -17,6 +17,9 @@ rusb(n, theta = 0, nu = 5)
 \item{nu}{smoothness parameter of the USB distribution.}
 
 \item{n}{number of observations.}
+
+\item{quasi}{logical indicating whether quasi random numbers sholuld be used
+(\code{\link[qrng:ghalton]{qrng::ghalton()}}); only works for \code{theta = 0}.}
 }
 \description{
 The uniform scaled beta (USB) distribution describes the distribution of

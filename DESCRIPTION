@@ -11,7 +11,8 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     stats,
-    Rcpp (>= 0.12.5)
+    Rcpp (>= 0.12.5),
+    qrng
 LinkingTo: Rcpp, RcppArmadillo
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.0

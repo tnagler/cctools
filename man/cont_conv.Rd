@@ -4,7 +4,7 @@
 \alias{cont_conv}
 \title{Continuous convolution}
 \usage{
-cont_conv(x, theta = 0, nu = 5)
+cont_conv(x, theta = 0, nu = 5, quasi = TRUE)
 }
 \arguments{
 \item{x}{data; numeric matrix or data frame.}
@@ -15,6 +15,9 @@ cont_conv(x, theta = 0, nu = 5)
 estimator uses the Epanechnikov kernel for smoothing and the USB for
 continuous convolution (default parameters correspond to the \eqn{U[-0.5,
   0.5]} distribution).}
+
+\item{quasi}{logical indicating whether quasi random numbers sholuld be used
+(\code{\link[qrng:ghalton]{qrng::ghalton()}}); only works for \code{theta = 0}.}
 }
 \value{
 A data frame with noise added to each discrete variable (ordered
