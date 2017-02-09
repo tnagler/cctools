@@ -11,13 +11,11 @@ dat <- data.frame(
 exp_len <- 8
 
 test_that("returns right size and type of appropriate size", {
-    expect_is(expand_as_numeric(as.matrix(dat)), "numeric")
+    expect_is(expand_as_numeric(dat), "numeric")
     expect_equal(dim(expand_as_numeric(dat)), c(nrow(dat), exp_len))
 
-
     expect_is(expand_vec(rep(0.5, 5), dat), "numeric")
-    expect_is(expand_vec(rep(0.5, 5), dat), "numeric")
-
+    expect_is(expand_vec(0.5, dat), "numeric")
 })
 
 test_that("throw error for characters or other", {

@@ -28,7 +28,7 @@
 #' @export
 expand_as_numeric <- function(x) {
     if (!inherits(x, "data.frame"))
-        x <- as.data.frame(x)
+        x <- as.data.frame(x, stringsAsFactors = FALSE)
     # which variables will be discrete in the output data frame?
     i_disc <- get_i_disc(x)
 
@@ -72,6 +72,9 @@ is_disc <- function(x) {
         return(FALSE)
     } else if (is.ordered(x)) {
         return(TRUE)
+    } else if (is.character(x)) {
+        stop("Don't know how to treat character variables; ",
+             "use either numeric, ordered, or factor.")
     } else {
         return(rep(TRUE, length(levels(x)) - 1))
     }
