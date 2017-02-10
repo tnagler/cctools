@@ -84,18 +84,19 @@ predict.cckde <- function(object, newdata, ...)
 
 #' @importFrom stats IQR optim pbeta rbeta runif sd
 #' @importFrom Rcpp evalCpp
+#' @importFrom MASS bandwidth.nrd
 #' @noRd
-select_bw <- function(x, x_cc, i_ord = integer(0), bw_min = 0) {
-    n <- nrow(x)
-    d <- ncol(x)
-
+select_bw <- function(x, x_cc, i_disc = integer(0), bw_min = 0) {
     ## set lower bounds for the bandwidth of each variable
-    bw_lower <- rep(1e-5, d)
-    bw_lower[i_ord] <- bw_min
+    bw_lower <- rep(1e-5, ncol(x))
+    bw_lower[i_disc] <- bw_min
 
     ## set starting values by normal reference rule
+    # - 2.3449 is the constant for Epanechnikov kernel
+    # - n^(-1 / (4 + d_cont)) is the optimal order, where d_cont is the number
+    #   of continuous variables
     bw_start_fun <- function(y)
-        2.34 * min(sd(y), IQR(y) / 1.34) * n^(-1/(4 + d))
+        2.3449 * sd(y) * nrow(x_cc)^(-1 / (4 + ncol(x_cc) - length(i_disc)))
     bw_start <- apply(x_cc, 2, bw_start_fun)
     bw_start <- pmax(bw_start, bw_lower)  # adjust with lower bounds
 
@@ -105,7 +106,7 @@ select_bw <- function(x, x_cc, i_ord = integer(0), bw_min = 0) {
         function(bw) lcv_mvkde_disc(x, x_cc, bw),
         lower = bw_lower,
         method = "L-BFGS-B",
-        control = list(fnscale = -1)  # for maximization
+        control = list(fnscale = -1, parscale = apply(x_cc, 2, sd), pgtol = 0)
     )
 
     ## return optimal bandwidths
