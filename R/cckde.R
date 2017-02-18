@@ -112,8 +112,10 @@ select_bw <- function(x, x_cc, i_disc = integer(0), bw_min = 0) {
     # - 2.3449 is the constant for Epanechnikov kernel
     # - n^(-1 / (4 + d_cont)) is the optimal order, where d_cont is the number
     #   of continuous variables
+    # - we use d_cont / 2 for the middle way between asymptotics and small
+    #   sample behavior
     bw_start_fun <- function(y)
-        2.3449 * sd(y) * nrow(x_cc)^(-1 / (4 + ncol(x_cc) - length(i_disc)))
+        2.3449 * sd(y) * nrow(x_cc)^(-1 / (4 + ncol(x_cc) - length(i_disc) / 2))
     bw_start <- apply(x_cc, 2, bw_start_fun)
     bw_start <- pmax(bw_start, bw_lower)  # adjust with lower bounds
 
