@@ -47,7 +47,10 @@ cckde <- function(x, bw = NULL, mult = 1, theta = 0, nu = 5) {
     if (is.null(bw)) {
         # find optimal bandwidths using likelihood cross-validation
         x_eval <- expand_as_numeric(x)
-        bw <- select_bw(x_eval, x_cc, attr(x_cc, "i_disc"), bw_min = 0.5 - theta)
+        bw <- select_bw(x = x_eval,
+                        x_cc = x_cc,
+                        i_disc = attr(x_cc, "i_disc"),
+                        bw_min = 0.5 - theta)
     }
 
     # adjust bws
@@ -102,7 +105,7 @@ predict.cckde <- function(object, newdata, ...)
 #' @noRd
 select_bw <- function(x, x_cc, i_disc = integer(0), bw_min = 0) {
     ## set lower bounds for the bandwidth of each variable
-    bw_lower <- rep(1e-5, ncol(x))
+    bw_lower <- rep(0, ncol(x))
     bw_lower[i_disc] <- bw_min
 
     ## set starting values by normal reference rule

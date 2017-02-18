@@ -51,8 +51,9 @@ dusb <- function(x, theta = 0, nu = 5) {
 
 #' @rdname dusb
 #' @param n number of observations.
-#' @param quasi logical indicating whether quasi random numbers sholuld be used
-#'   ([qrng::ghalton()]); only works for `theta = 0`.
+#' @param quasi logical indicating whether quasi random numbers
+#'   ([qrng::ghalton()]) should be used for generating uniforms (which are then
+#'   transformed by the quantile function)
 #' @importFrom qrng ghalton
 #' @importFrom stats qbeta rbeta
 #' @export
@@ -65,12 +66,14 @@ rusb <- function(n, theta = 0, nu = 5, quasi = FALSE) {
         if (theta > 0)
             x <- x + 2 * theta * (rbeta(n, nu, nu) - 0.5)
     } else {
+        # permute the quasi-random sequence randomly to avoid correlation
+        # between several usb random variables
         if (theta == 0) {
-            x <- (qrng::ghalton(n, d = 1) - 0.5) * 2 * a
+            x <- (qrng::ghalton(n, d = 1) - 0.5)[sample(n)] * 2 * a
         } else {
-            u <- qrng::ghalton(2 * n, d = 1)[sample(2 * n)]
-            x <- (u[seq.int(n)]  - 0.5) * 2 * a +
-                2 * theta * (qbeta(u[-seq.int(n)], nu, nu) - 0.5)
+            u <- qrng::ghalton(n, d = 2)[sample(n), ]
+            x <- (u[, 1]  - 0.5) * 2 * a +
+                2 * theta * (qbeta(u[, 2], nu, nu) - 0.5)
         }
     }
 

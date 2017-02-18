@@ -18,8 +18,9 @@ rusb(n, theta = 0, nu = 5, quasi = FALSE)
 
 \item{n}{number of observations.}
 
-\item{quasi}{logical indicating whether quasi random numbers sholuld be used
-(\code{\link[qrng:ghalton]{qrng::ghalton()}}); only works for \code{theta = 0}.}
+\item{quasi}{logical indicating whether quasi random numbers
+(\code{\link[qrng:ghalton]{qrng::ghalton()}}) should be used for generating uniforms (which are then
+transformed by the quantile function)}
 }
 \description{
 The uniform scaled beta (USB) distribution describes the distribution of
