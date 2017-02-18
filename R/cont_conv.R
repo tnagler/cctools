@@ -38,7 +38,7 @@
 #'
 #' @export
 cont_conv <- function(x, theta = 0, nu = 5, quasi = TRUE) {
-    cc_add_noise(expand_as_numeric(x), theta, nu, quasi = quasi)
+    cc_add_noise(expand_as_numeric(x), theta, nu, quasi)
 }
 
 #' Add noise to discrete variables
@@ -46,11 +46,11 @@ cont_conv <- function(x, theta = 0, nu = 5, quasi = TRUE) {
 #' @param x data matrix created by `expand_as_numeric()` (this is important,
 #'   because we need to know which variables are discrete).
 #' @noRd
-cc_add_noise <- function(x, theta = 0, nu = 5, quasi = FALSE) {
+cc_add_noise <- function(x, theta, nu, quasi) {
     stopifnot(inherits(x, "expanded_as_numeric"))
     i_disc <- attr(x, "i_disc")
     n_disc <- length(i_disc)
-    if (n_disc > 1) {
+    if (n_disc > 0) {
         E <- matrix(rusb(n_disc * nrow(x), theta, nu, quasi), nrow(x), n_disc)
         x[, i_disc] <- x[, i_disc] + E
     }

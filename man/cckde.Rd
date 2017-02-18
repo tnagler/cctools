@@ -6,7 +6,7 @@
 \alias{predict.cckde}
 \title{Continuous convolution density estimator}
 \usage{
-cckde(x, bw = NULL, mult = 1, theta = 0, nu = 0.5)
+cckde(x, bw = NULL, mult = 1, theta = 0, nu = 5)
 
 dcckde(x, object)
 

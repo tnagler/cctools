@@ -73,7 +73,22 @@ dcckde <- function(x, object) {
     # variables must be in same order
     x <- x[, colnames(object$x_cc), drop = FALSE]
 
-    c(eval_mvkde(x, object$x_cc, object$bw))
+    # raw density
+    f <- c(eval_mvkde(x, object$x_cc, object$bw))
+
+    ## normalize such that discrete variables' marginal densities sum to 1
+    i_disc <- attr(object$x_cc, "i_disc")
+    if (length(i_disc) > 0) {
+        for (i in i_disc) {
+            lvls <- attr(object$x_cc, "levels")[[i]]
+            f <- f /
+                sum(eval_mvkde(as.matrix(seq.int(length(lvls))),
+                               object$x_cc[, i, drop = FALSE],
+                               object$bw[i, drop = FALSE]))
+        }
+    }
+
+    f
 }
 
 #' @rdname cckde
@@ -84,7 +99,6 @@ predict.cckde <- function(object, newdata, ...)
 
 #' @importFrom stats IQR optim pbeta rbeta runif sd
 #' @importFrom Rcpp evalCpp
-#' @importFrom MASS bandwidth.nrd
 #' @noRd
 select_bw <- function(x, x_cc, i_disc = integer(0), bw_min = 0) {
     ## set lower bounds for the bandwidth of each variable

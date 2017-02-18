@@ -68,9 +68,9 @@ rusb <- function(n, theta = 0, nu = 5, quasi = FALSE) {
         if (theta == 0) {
             x <- (qrng::ghalton(n, d = 1) - 0.5) * 2 * a
         } else {
-            u <- (qrng::ghalton(n, d = 1) - 0.5) * 2 * a
-            u <- u[sample(2 * n)]
-            x <- u[seq.int(n)] + 2 * theta * (qbeta(u[-seq.int(n)], nu, nu) - 0.5)
+            u <- qrng::ghalton(2 * n, d = 1)[sample(2 * n)]
+            x <- (u[seq.int(n)]  - 0.5) * 2 * a +
+                2 * theta * (qbeta(u[-seq.int(n)], nu, nu) - 0.5)
         }
     }
 
