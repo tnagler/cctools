@@ -1,0 +1,184 @@
+---
+title: 'cctools: A simulation study'
+author: "Thomas Nagler"
+date: "March 12, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The following code allows runs the simulation study of the paper
+
+> Nagler, T. (2017). *Nonparametric density estimation with discrete variables.*
+Unpublished manuscript.
+
+The set of scenarios and number of Monte-Carlo samples are reduced for faster
+run time. You can change them to run the actual simulation study
+
+### Required libraries
+```{r, warning = FALSE, message = FALSE}
+library("np")
+library("cctools")
+library("doParallel")
+```
+
+
+### The main function
+
+The following function  
+
+1. simulates data from a specification of  
+    * seed,
+    * number of observations (`n`),
+    * number of trials for Binomail variables (`m`),
+    * number of discrete variables (`p`),
+* number of continuous variables (`q`).
+2. sets up a corresponding evaluation grid,
+3. fits the three estimators,
+4. evaluates their performance by calculating the *mean average squared error 
+(MASE)* on the grid.
+
+```{r}
+do_binom <- function(seed, n, m, p, q) {
+    set.seed(seed)
+    ## model setup --------------------------------
+    # grid
+    gridp <- lapply(seq_len(p), function(j) 0:m)
+    gridq <- lapply(seq_len(q), function(j) seq(-2, 2, by = 0.4))
+    grid <- as.matrix(do.call(expand.grid, c(gridp, gridq)))
+    colnames(grid) <- paste0("X", 1:ncol(grid))
+    grid_ord <- as.data.frame(grid)
+    for (j in seq_len(p))
+        grid_ord[, j] <- ordered(grid_ord[, j], 0:m)
+    
+    # simulate data
+    u <- matrix(runif(n * (p + q)), n, p + q)
+    datp <- lapply(seq_len(p), function(j) qbinom(u[, j], size = m, prob = 0.3))
+    datq <- lapply(seq_len(q), function(j) qnorm(u[, p + j]))
+    
+    dat <- c(datp, datq)
+    dat <- as.data.frame(dat)
+    colnames(dat) <- paste0("X", 1:ncol(dat))
+    dat_ord <- dat
+    for (j in seq_len(p))
+        dat_ord[, j] <- ordered(dat_ord[, j], 0:m)
+    
+    # true density values
+    margsp <- lapply(seq_len(p), function(j) dbinom(grid[, j], size = m, prob = 0.3))
+    margsq <- lapply(seq_len(q), function(j) dnorm(grid[, p + j]))
+    margs <- do.call(cbind, c(margsp, margsq))
+    val_true <- apply(margs, 1, prod)
+    
+    
+    ## estimators ------------------------------------
+    # Li Racine
+    capture.output(bws <- npudensbw(dat_ord, nmulti = 1, ckertype = "epanechnikov"))
+    val_np <- fitted(npudens(bws = bws, edat = grid_ord))
+    
+    # cc kernel density
+    fit <- cckde(dat_ord)
+    val_cckde <- dcckde(grid_ord, fit)
+    
+    # cc kernel density
+    fit2 <- cckde(dat_ord, theta = 0.25)
+    val_cckde2 <- dcckde(grid_ord, fit2)
+    
+    ## error measures ----------------------------------
+    mse_np     <- mean(abs((val_np - val_true))^2)
+    mse_cckde <- mean(abs((val_cckde - val_true))^2)
+    mse_cckde2 <- mean(abs((val_cckde2 - val_true))^2)
+    
+    
+    ## results ----------------------------------------
+    data.frame(
+        MISE = c(mse_np, mse_cckde, mse_cckde2),
+        estimator = c("liracine", "cckde", "cckde2"),
+        p = p,
+        q = q,
+        m = m,
+        n = n,
+        seed = seed
+    )
+}
+
+```
+
+
+### Running the study
+
+First, we register a parallel backend (optional):
+```{r, eval = FALSE}
+ncores <- detectCores() - 1
+cl <- makeCluster(ncores, outfile = "")
+registerDoParallel(cl)
+```
+
+Next, set up the combinations of `p` and `q`:
+```{r}
+# ## Paper set up
+# m_scens <- c(1, 15) 
+# n_scens <- c(50, 200)
+# pq_scens <- list(c(1, 0), c(5, 0), c(3, 2))
+## Simplified setup for vignette
+m_scens <- c(1, 5)
+n_scens <- 50
+pq_scens <- list(c(1, 0), c(1, 1))
+```
+
+Finally, we run the study (for faster evaluation, we only use 50 simulations per
+scenario in this vignette):
+
+```{r, warning = FALSE}
+n_sim <- 50  # paper uses 1000
+res <- NULL
+for (s in seq_along(pq_scens)) {
+    pp <- pq_scens[[s]][1]
+    qq <- pq_scens[[s]][2]
+    for (mm in m_scens) {
+        for (nn in n_scens) {
+            print(paste("p =", pp,
+                        ", q =", qq,
+                        ", m =", mm,
+                        ", n =", nn))
+            resi <- foreach(
+                seed = 1:n_sim,
+                .packages = c("np", "cctools", "copula"),
+                .combine = rbind) %dopar% {
+                    tryCatch(
+                        do_binom(seed, n = nn, m = mm, p = pp, q = qq),
+                        error = function(e) NA
+                    )
+                }
+            res <- rbind(res, resi)
+        }
+    }
+}
+```
+```{r, eval = FALSE}
+closeAllConnections()
+```
+
+
+### Analysis of results 
+
+The plot is similar to the one in the paper, but custom styling has been removed
+for simplicity.
+
+```{r, warning = FALSE, message = FALSE}
+library("tidyverse")
+res %>%
+    mutate(mpq = paste0("italic(m == ", m,
+                        "* ~~~~~~~ p ==", p,
+                        "* ~~~~~~~ q == ", q, ")"),
+           m = paste0("italic(m == ", m, ")"),
+           RASE = sqrt(MISE)) %>%
+    transform(mpq = factor(mpq, levels = levels(as.factor(mpq))[c(4, 6, 5, 1, 3, 2)])) %>%
+    ggplot(aes(x = estimator, y = RASE, fill = estimator, alpha = factor(n))) +
+    scale_alpha_manual(values = c(1, 0.5)) +
+    geom_boxplot(show.legend = FALSE, outlier.size = 0.1, width = 1 / 1.61) +
+    facet_wrap(~ mpq, scales = "free", label = label_parsed) +
+    ylab(expression(plain(RASE))) +
+    theme(aspect.ratio = 1)
+```
