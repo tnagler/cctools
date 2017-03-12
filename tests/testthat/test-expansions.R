@@ -29,3 +29,10 @@ test_that("throw error for characters or other", {
     dat$char <- complex(1:10)
     expect_error(cont_conv(dat))
 })
+
+test_that("has no effect when applied multiple times", {
+    dat_xpnd <- expand_as_numeric(dat)
+    expect_identical(expand_as_numeric(dat_xpnd), dat_xpnd)
+})
+
+

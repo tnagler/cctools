@@ -27,6 +27,8 @@
 #'
 #' @export
 expand_as_numeric <- function(x) {
+    if (inherits(x, "expanded_as_numeric"))
+        return(x)
     if (!inherits(x, "data.frame"))
         x <- as.data.frame(x, stringsAsFactors = FALSE)
     # which variables will be discrete in the output data frame?
