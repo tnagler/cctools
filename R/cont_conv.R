@@ -19,8 +19,8 @@
 #' @details The UPSB distribution ([dusb()]) is used as the noise distribution.
 #'   Discrete variables are assumed to be integer-valued.
 #'
-#' @references Nagler, T. (2017). Nonparametric estimation of probability
-#'   densities when some variables are discrete. Unpublished manuscript.
+#' @references Nagler, T. (2017). Nonparametric density estimation with discrete
+#'     variables. Unpublished manuscript.
 #'
 #' @examples
 #' # dummy data with discrete variables

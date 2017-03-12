@@ -41,8 +41,6 @@ x <- rusb(100, theta = 0.3, nu = 0)
 
 }
 \references{
-Nagler, T. (2017).
-Nonparametric estimation of probability densities when some variables are
-discrete.
-Unpublished manuscript.
+Nagler, T. (2017). Nonparametric density estimation with discrete
+variables. Unpublished manuscript.
 }
