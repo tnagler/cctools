@@ -9,7 +9,7 @@ dat <- data.frame(
     X2 = rexp(10)
 )
 
-test_that("cont_cov adds noise to the right variables", {
+test_that("adds noise to the right variables", {
     dat_cc <- cont_conv(dat)
     i_disc <- attr(dat_cc, "i_disc")
     i_cnt <- setdiff(seq.int(ncol(dat)), i_disc)
@@ -17,3 +17,7 @@ test_that("cont_cov adds noise to the right variables", {
     sapply(i_cnt, function(i) expect_false(all(dat[, i] == dat_cc[ , i])))
 })
 
+test_that("has no effect when applied multiple times", {
+    dat_cc <- cont_conv(dat)
+    expect_identical(cont_conv(dat_cc), dat_cc)
+})

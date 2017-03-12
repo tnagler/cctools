@@ -38,6 +38,8 @@
 #'
 #' @export
 cont_conv <- function(x, theta = 0, nu = 5, quasi = TRUE) {
+    if (inherits(x, "expanded_as_numeric"))
+        return(x)
     cc_add_noise(expand_as_numeric(x), theta, nu, quasi)
 }
 
