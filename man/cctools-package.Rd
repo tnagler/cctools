@@ -11,8 +11,8 @@ for continuous convolution \code{\link[=cont_conv]{cont_conv()}}, and the contin
 kernel density estimator \code{\link[=cckde]{cckde()}}.
 }
 \references{
-Nagler, T. (2017). Nonparametric estimation of probability
-densities when some variables are discrete. Unpublished manuscript.
+Nagler, T. (2017). \emph{Nonparametric density estimation with discrete
+variables.} Unpublished manuscript.
 }
 \author{
 Thomas Nagler

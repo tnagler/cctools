@@ -11,8 +11,8 @@
 #'
 #' @author Thomas Nagler
 #'
-#' @references Nagler, T. (2017). Nonparametric estimation of probability
-#'   densities when some variables are discrete. Unpublished manuscript.
+#' @references Nagler, T. (2017). *Nonparametric density estimation with discrete
+#'     variables.* Unpublished manuscript.
 #'
 #' @keywords package
 #'

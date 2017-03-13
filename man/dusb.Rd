@@ -41,6 +41,6 @@ x <- rusb(100, theta = 0.3, nu = 0)
 
 }
 \references{
-Nagler, T. (2017). Nonparametric density estimation with discrete
-variables. Unpublished manuscript.
+Nagler, T. (2017). \emph{Nonparametric density estimation with discrete
+variables.} Unpublished manuscript.
 }

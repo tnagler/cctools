@@ -48,6 +48,6 @@ pairs(cont_conv(dat))          # continuously convoluted data
 
 }
 \references{
-Nagler, T. (2017). Nonparametric density estimation with discrete
-variables. Unpublished manuscript.
+Nagler, T. (2017). \emph{Nonparametric density estimation with discrete
+variables.} Unpublished manuscript.
 }
