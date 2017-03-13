@@ -6,7 +6,7 @@
 \alias{predict.cckde}
 \title{Continuous convolution density estimator}
 \usage{
-cckde(x, bw = NULL, mult = 1, theta = 0, nu = 5)
+cckde(x, bw = NULL, mult = 1, theta = 0, nu = 5, ...)
 
 dcckde(x, object)
 
@@ -28,9 +28,11 @@ multiplier.}
 The estimator uses the Epanechnikov kernel for smoothing and the UPSB for
 continuous convolution (default parameters correspond to the}
 
+\item{...}{unused.}
+
 \item{object}{\code{cckde} object.}
 
-\item{newdata}{matrix or data frame containing evaluation points}
+\item{newdata}{matrix or data frame containing evaluation points.}
 
 \item{...}{unused.}
 }

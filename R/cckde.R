@@ -16,7 +16,8 @@
 #'   The estimator uses the Epanechnikov kernel for smoothing and the UPSB for
 #'   continuous convolution (default parameters correspond to the
 #' @param object `cckde` object.
-#' @param newdata matrix or data frame containing evaluation points
+#' @param newdata matrix or data frame containing evaluation points.
+#' @param ... unused.
 #'
 #' @details If a variable should be treated as ordered discrete, declare it as
 #'   [ordered()], factors are expanded into discrete dummy codings.
@@ -40,7 +41,7 @@
 #'
 #' @export
 #' @useDynLib cctools
-cckde <- function(x, bw = NULL, mult = 1, theta = 0, nu = 5) {
+cckde <- function(x, bw = NULL, mult = 1, theta = 0, nu = 5, ...) {
     # continuous convolution of the data
     x_cc <- cont_conv(x, theta = theta, nu = nu)
 
