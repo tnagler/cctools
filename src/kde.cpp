@@ -34,36 +34,6 @@ arma::vec kern_epan(const arma::mat& x,
     return out;
 }
 
-arma::vec convkern_epan_1d(const arma::vec& x,
-                           const double& b)
-{
-    vec out(x);
-    unsigned int n = x.n_rows;
-
-    for (unsigned int i = 0; i < n; ++i) {
-        if (std::fabs(x[i] / b) >= 2.0) {
-            out[i] = 0;
-        } else {
-            out[i] = 3.0/160.0 * pow(2.0 - x[i] / b, 3) * (pow(x[i] / b, 2) + 6 * x[i] + 4) / b;
-        }
-    }
-    return out;
-}
-
-arma::vec convkern_epan(const arma::mat& x,
-                        const arma::vec& b)
-{
-    vec out(x.n_rows);
-    unsigned int d = x.n_cols;
-
-    out = kern_epan_1d(x.col(0), b[0]);
-    for (unsigned int j = 1; j < d; ++j) {
-        out = out % convkern_epan_1d(x.col(j), b[j]);
-    }
-    return out;
-}
-
-
 // [[Rcpp::export]]
 arma::vec eval_mvkde(const arma::mat& xev,
                      const arma::mat& x,
@@ -103,6 +73,35 @@ arma::vec lcv_mvkde_disc(const arma::mat& x,
 }
 
 // other bandwidth selection methods below (unused) --------------------
+
+// arma::vec convkern_epan_1d(const arma::vec& x,
+//                            const double& b)
+// {
+//     vec out(x);
+//     unsigned int n = x.n_rows;
+//
+//     for (unsigned int i = 0; i < n; ++i) {
+//         if (std::fabs(x[i] / b) >= 2.0) {
+//             out[i] = 0;
+//         } else {
+//             out[i] = 3.0/160.0 * pow(2.0 - x[i] / b, 3) * (pow(x[i] / b, 2) + 6 * x[i] + 4) / b;
+//         }
+//     }
+//     return out;
+// }
+//
+// arma::vec convkern_epan(const arma::mat& x,
+//                         const arma::vec& b)
+// {
+//     vec out(x.n_rows);
+//     unsigned int d = x.n_cols;
+//
+//     out = kern_epan_1d(x.col(0), b[0]);
+//     for (unsigned int j = 1; j < d; ++j) {
+//         out = out % convkern_epan_1d(x.col(j), b[j]);
+//     }
+//     return out;
+// }
 
 // //' @export
 // // see Bruce Hansen's lecture notes (Section 2.16)
