@@ -6,7 +6,6 @@ test_that("Density integrates to one", {
     expect_equal(integrate(dusb, -1, 1)$value, 1)
     expect_equal(integrate(dusb, -1, 1, theta = 0.4)$value, 1)
     expect_equal(integrate(dusb, -1, 1, theta = 0.4, nu = 10)$value, 1)
-    expect_equal(integrate(dusb, -1, 1, theta = 0.4, nu = 0)$value, 1)
 })
 
 test_that("Simulation works", {
