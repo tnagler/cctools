@@ -29,8 +29,8 @@
 #' # dummy data with discrete variables
 #' dat <- data.frame(
 #'     F1 = factor(rbinom(10, 4, 0.1), 0:4),
-#'     Z1 = as.ordered(rbinom(10, 5, 0.5)),
-#'     Z2 = as.ordered(rpois(10, 1)),
+#'     Z1 = ordered(rbinom(10, 5, 0.5), 0:5),
+#'     Z2 = ordered(rpois(10, 1), 0:10),
 #'     X1 = rnorm(10),
 #'     X2 = rexp(10)
 #' )
@@ -86,7 +86,7 @@ dcckde <- function(x, object) {
         for (i in i_disc) {
             lvls <- attr(object$x_cc, "levels")[[i]]
             f <- f /
-                sum(eval_mvkde(as.matrix(seq.int(length(lvls))),
+                sum(eval_mvkde(as.matrix(as.numeric(lvls)),
                                object$x_cc[, i, drop = FALSE],
                                object$bw[i, drop = FALSE]))
         }
