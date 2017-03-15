@@ -42,5 +42,6 @@ test_that("mult parameter works", {
 test_that("Density works", {
     expect_error(dcckde(dat, 1))
     expect_is(dcckde(dat[1, ], fit), "numeric")
-    expect_is(dcckde(dat, fit), "numeric")
+    expect_gte(min(dcckde(dat, fit)), 0)
+    expect_equal(dcckde(dat, fit), predict(fit, dat))
 })
