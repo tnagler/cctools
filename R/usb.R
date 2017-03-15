@@ -27,23 +27,10 @@
 #' @export
 dusb <- function(x, theta = 0, nu = 5) {
     stopifnot(theta >= 0)
-    stopifnot(theta <= 0.5)
-    a <- 0.5
-    out <- numeric(length(x))
-
-    # first component
-    ind1 <- (x > -a - theta) & (x < -a + theta)
-    out[ind1] <- pbeta((x[ind1] + a + theta) / (2 * theta), nu, nu) / (2 * a)
-
-    # second component
-    ind2 <- (abs(x) <= a - theta)
-    out[ind2] <- 1 / (2 * a)
-
-    # third component
-    ind3 <- (x > a - theta) & (x < a + theta)
-    out[ind3] <- pbeta((a + theta - x[ind3]) / (2 * theta), nu, nu) / (2 * a)
-
-    out
+    stopifnot(nu > 0)
+    if (theta == 0)
+        return(as.numeric(abs(x) < 0.5))
+    pbeta((x + 0.5) / theta + 0.5, nu, nu) - pbeta((x - 0.5) / theta + 0.5, nu, nu)
 }
 
 #' @rdname dusb
