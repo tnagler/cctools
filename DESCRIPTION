@@ -1,7 +1,7 @@
 Package: cctools
 Type: Package
 Title: Tools for the continuous convolution trick in nonparametric estimation
-Version: 0.1.0.9000
+Version: 0.1.0
 Authors@R: person("Thomas", "Nagler", , "thomas.nagler@tum.de", c("aut", "cre"))
 Description: Implements the uniform scaled beta distribution and
   the continuous convolution kernel density estimator.
@@ -15,5 +15,5 @@ Imports:
     qrng
 LinkingTo: Rcpp, RcppArmadillo
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.0
+RoxygenNote: 6.0.1
 Suggests: testthat

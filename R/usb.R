@@ -10,8 +10,9 @@
 #' @param theta scale parameter of the USB distribution.
 #' @param nu smoothness parameter of the USB distribution.
 #'
-#' @references Nagler, T. (2017). *Nonparametric density estimation with discrete
-#'     variables.* Unpublished manuscript.
+#' @references
+#' Nagler, T. (2017). *A generic approach to nonparametric function
+#' estimation with mixed data.* Unpublished manuscript.
 #'
 #' @examples
 #' # plot distribution

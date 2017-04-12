@@ -22,8 +22,9 @@
 #' @details If a variable should be treated as ordered discrete, declare it as
 #'   [ordered()], factors are expanded into discrete dummy codings.
 #'
-#' @references Nagler, T. (2017). *Nonparametric density estimation with discrete
-#'     variables.* Unpublished manuscript.
+#' @references
+#' Nagler, T. (2017). *A generic approach to nonparametric function
+#' estimation with mixed data.* Unpublished manuscript.
 #'
 #' @examples
 #' # dummy data with discrete variables

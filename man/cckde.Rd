@@ -62,6 +62,6 @@ predict(fit, dat)  # equivalent
 
 }
 \references{
-Nagler, T. (2017). \emph{Nonparametric density estimation with discrete
-variables.} Unpublished manuscript.
+Nagler, T. (2017). \emph{A generic approach to nonparametric function
+estimation with mixed data.} Unpublished manuscript.
 }
