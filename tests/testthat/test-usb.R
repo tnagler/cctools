@@ -27,3 +27,4 @@ test_that("Simulation works", {
     expect_lt(max(abs(rusb(500, quasi = TRUE, theta = 0.99, nu = 10))), 1)
     expect_gt(max(abs(rusb(500, quasi = TRUE, theta = 0.99, nu = 1))), 0.95)
 })
+

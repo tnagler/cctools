@@ -4,8 +4,8 @@ context("Continuous convolution kernel density estimator")
 set.seed(5)
 dat <- data.frame(
     F1 = factor(rbinom(10, 4, 0.1), 0:4),
-    Z1 = as.ordered(rbinom(10, 5, 0.5)),
-    Z2 = as.ordered(rpois(10, 1)),
+    Z1 = ordered(rbinom(10, 5, 0.5), 0:5),
+    Z2 = ordered(rpois(10, 1), 0:10),
     X1 = rnorm(10),
     X2 = rexp(10)
 )
@@ -44,5 +44,5 @@ test_that("Density works", {
     expect_error(dcckde(dat, 1))
     expect_is(dcckde(dat[1, ], fit), "numeric")
     expect_gte(min(dcckde(dat, fit)), 0)
-    expect_identical(dcckde(dat, fit), predict(fit, dat))
+    expect_equal(dcckde(dat, fit), predict(fit, dat))
 })
