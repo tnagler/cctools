@@ -13,7 +13,6 @@ exp_len <- 8
 test_that("returns right type", {
     expect_is(expand_as_numeric(dat), "numeric")
     expect_is(expand_vec(rep(0.5, 5), dat), "numeric")
-    expect_is(expand_vec("a", dat), "character")
     expect_is(cont_conv(dat), "numeric")
 })
 

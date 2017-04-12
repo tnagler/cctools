@@ -44,21 +44,19 @@ dusb <- function(x, theta = 0, nu = 5) {
 #' @export
 rusb <- function(n, theta = 0, nu = 5, quasi = FALSE) {
     stopifnot(theta >= 0)
-    stopifnot(theta <= 0.5)
-    a <- 0.5
+    stopifnot(theta <= 1)
     if (!quasi) {
-        x <- (runif(n) - 0.5) * 2 * a
+        x <- (runif(n) - 0.5)
         if (theta > 0)
-            x <- x + 2 * theta * (rbeta(n, nu, nu) - 0.5)
+            x <- x + theta * (rbeta(n, nu, nu) - 0.5)
     } else {
         # permute the quasi-random sequence randomly to avoid correlation
         # between several usb random variables
         if (theta == 0) {
-            x <- (qrng::ghalton(n, d = 1) - 0.5)[sample(n)] * 2 * a
+            x <- (qrng::ghalton(n, d = 1) - 0.5)[sample(n)]
         } else {
             u <- qrng::ghalton(n, d = 2)[sample(n), ]
-            x <- (u[, 1]  - 0.5) * 2 * a +
-                2 * theta * (qbeta(u[, 2], nu, nu) - 0.5)
+            x <- (u[, 1]  - 0.5) + theta * (qbeta(u[, 2], nu, nu) - 0.5)
         }
     }
 
