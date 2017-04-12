@@ -24,5 +24,6 @@ devtools::install_github("tnagler/cctools")
 
 ### References 
 
-Nagler, T. (2017). *Nonparametric density estimation with discrete variables.*
+Nagler, T. (2017). *A generic approach to nonparametric function estimation
+with mixed data.*
 Unpublished manuscript.
