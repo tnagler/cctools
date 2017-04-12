@@ -87,7 +87,7 @@ dcckde <- function(x, object) {
         for (i in i_disc) {
             lvls <- attr(object$x_cc, "levels")[[i]]
             f <- f /
-                sum(eval_mvkde(as.matrix(seq.int(length(lvls))),
+                sum(eval_mvkde(as.matrix(seq.int(length(lvls)) - 1),
                                object$x_cc[, i, drop = FALSE],
                                object$bw[i, drop = FALSE]))
         }

@@ -55,7 +55,7 @@ cc_prepare_one <- function(x) {
     if (is.numeric(x)) {
         # nothing to do
     } else if (is.ordered(x)) {
-        x <- as.numeric(x)
+        x <- as.numeric(x) - 1
     } else if (is.factor(x)) {
         # expand factors, first column is intercept
         x <- model.matrix(~ x)[, -1, drop = FALSE]

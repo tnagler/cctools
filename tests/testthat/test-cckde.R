@@ -1,6 +1,7 @@
 context("Continuous convolution kernel density estimator")
 
 # dummy data
+set.seed(5)
 dat <- data.frame(
     F1 = factor(rbinom(10, 4, 0.1), 0:4),
     Z1 = as.ordered(rbinom(10, 5, 0.5)),
@@ -9,7 +10,7 @@ dat <- data.frame(
     X2 = rexp(10)
 )
 
-set.seed(1)  # because continuously convoluted data is random
+set.seed(5)
 fit <- cckde(dat)
 
 test_that("Recognizes discrete variables", {
@@ -31,10 +32,10 @@ test_that("bw parameter works", {
 
 test_that("mult parameter works", {
     expect_error(cckde(dat, mult = 0))
-    set.seed(1)
+    set.seed(5)
     new_fit <- cckde(dat, mult = 2)
     expect_equal(2 * fit$bw, new_fit$bw)
-    set.seed(1)
+    set.seed(5)
     new_fit <- cckde(dat, mult = 1:8)
     expect_equal(1:8 * fit$bw, new_fit$bw)
 })

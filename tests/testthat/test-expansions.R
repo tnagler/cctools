@@ -1,6 +1,7 @@
 context("Expansion functions for categorical variables")
 
 # dummy data
+set.seed(5)
 dat <- data.frame(
     F1 = factor(rbinom(10, 4, 0.1), 0:4),
     Z1 = as.ordered(rbinom(10, 5, 0.5)),
