@@ -33,8 +33,6 @@ continuous convolution (default parameters correspond to the}
 \item{object}{\code{cckde} object.}
 
 \item{newdata}{matrix or data frame containing evaluation points.}
-
-\item{...}{unused.}
 }
 \description{
 The continuous convolution kernel density estimator is defined as the

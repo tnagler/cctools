@@ -97,7 +97,6 @@ dcckde <- function(x, object) {
 }
 
 #' @rdname cckde
-#' @param ... unused.
 #' @export
 predict.cckde <- function(object, newdata, ...)
     dcckde(newdata, object)
