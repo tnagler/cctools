@@ -1,4 +1,7 @@
 # cctools
+[![Build status Linux](https://travis-ci.org/tnagler/cctools.svg?branch=master)](https://travis-ci.org/tnagler/cctools)
+[![Build status Windows](https://ci.appveyor.com/api/projects/status/github/tnagler/cctools?branch=master&svg=true)](https://ci.appveyor.com/project/tnagler/cctools)
+[![codecov.io](https://codecov.io/github/tnagler/cctools/coverage.svg?branch=master)](https://codecov.io/github/tnagler/cctools?branch=master)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 cctools is an R package implementing the uniform scaled beta distribution, a 
