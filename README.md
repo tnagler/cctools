@@ -14,8 +14,10 @@ kernel density estimator, see Nagler (2017).
 devtools::install_github("tnagler/cctools")
 ```
 
-
 ### Functions
+
+For a detailed description, see the 
+[API documentation](https://tnagler.github.io/cctools/reference/index.html).
 
 * `dusb()`, `rusb()`: Density and simulation functions for the uniform scaled
   beta distribution.
