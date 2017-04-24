@@ -7,7 +7,7 @@
 #' @name cctools-package
 #' @aliases cctools
 #' @docType package
-#' @useDynLib cctools
+#' @useDynLib cctools, .registration = TRUE
 #'
 #' @author Thomas Nagler
 #'
