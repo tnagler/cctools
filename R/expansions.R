@@ -105,7 +105,7 @@ expanded_levels <- function(x) {
 #'
 #' @return A vector of size `ncol(expand_as_numeric(x)`.
 #'
-#' @noRd
+#' @export
 expand_vec <- function(y, x) {
     if (length(y) == 1)
         y <- rep(y, ncol(x))
