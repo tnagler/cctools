@@ -21,9 +21,9 @@ For a detailed description, see the
 
 * `dusb()`, `rusb()`: Density and simulation functions for the uniform scaled
   beta distribution.
-* `cont_conv`: Expands all factor variables in a data frame and applies the 
+* `cont_conv()`: Expands all factor variables in a data frame and applies the 
   continuous convolution tricks to all `ordered()` variables.
-* `cckde`, `dcckde`, `predict.cckde`: fit and evaluate the continuous 
+* `cckde()`, `dcckde()`, `predict.cckde()`: fit and evaluate the continuous 
   convolution kernel density estimator.
 
 
