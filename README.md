@@ -31,4 +31,5 @@ For a detailed description, see the
 
 Nagler, T. (2017). *A generic approach to nonparametric function estimation
 with mixed data.*
-Unpublished manuscript.
+[arXiv:1704.07457](https://arxiv.org/pdf/1704.07457.pdf)
+

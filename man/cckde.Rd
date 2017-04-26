@@ -25,8 +25,9 @@ multiplier.}
 \item{theta}{scale parameter of the USB distribution (see, \code{\link[=dusb]{dusb()}}).}
 
 \item{nu}{smoothness parameter of the USB distribution (see, \code{\link[=dusb]{dusb()}}).
-The estimator uses the Epanechnikov kernel for smoothing and the UPSB for
-continuous convolution (default parameters correspond to the}
+The estimator uses the Epanechnikov kernel for smoothing and the USB
+distribution for continuous convolution (default parameters correspond to
+the uniform distribution on \eqn{[-0.5, 0.5]}.}
 
 \item{...}{unused.}
 
@@ -61,5 +62,5 @@ predict(fit, dat)  # equivalent
 }
 \references{
 Nagler, T. (2017). \emph{A generic approach to nonparametric function
-estimation with mixed data.} Unpublished manuscript.
+estimation with mixed data.} \href{https://arxiv.org/pdf/1704.07457.pdf}{arXiv:1704.07457}
 }

@@ -13,8 +13,9 @@
 #'   multiplier.
 #' @param theta scale parameter of the USB distribution (see, [dusb()]).
 #' @param nu smoothness parameter of the USB distribution (see, [dusb()]).
-#'   The estimator uses the Epanechnikov kernel for smoothing and the UPSB for
-#'   continuous convolution (default parameters correspond to the
+#'   The estimator uses the Epanechnikov kernel for smoothing and the USB
+#'   distribution for continuous convolution (default parameters correspond to
+#'   the uniform distribution on \eqn{[-0.5, 0.5]}.
 #' @param object `cckde` object.
 #' @param newdata matrix or data frame containing evaluation points.
 #' @param ... unused.
@@ -24,7 +25,7 @@
 #'
 #' @references
 #' Nagler, T. (2017). *A generic approach to nonparametric function
-#' estimation with mixed data.* Unpublished manuscript.
+#' estimation with mixed data.* [arXiv:1704.07457](https://arxiv.org/pdf/1704.07457.pdf)
 #'
 #' @examples
 #' # dummy data with discrete variables
