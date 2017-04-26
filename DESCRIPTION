@@ -5,7 +5,7 @@ Version: 0.1.0
 Authors@R: person("Thomas", "Nagler", , "thomas.nagler@tum.de", c("aut", "cre"))
 Description: Implements the uniform scaled beta distribution and
   the continuous convolution kernel density estimator.
-License: GPL-3 + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:

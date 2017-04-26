@@ -5,3 +5,4 @@ appveyor.yml
 ^docs$
 cran-comments.md
 ^.*\.directory^
+LICENSE
