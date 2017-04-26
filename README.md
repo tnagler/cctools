@@ -6,7 +6,8 @@
 
 cctools is an R package implementing the uniform scaled beta distribution, a 
 generic function for continuous convolution, and the continuous convolution
-kernel density estimator, see Nagler (2017).
+kernel density estimator, see 
+[Nagler (2017)](https://arxiv.org/abs/1704.07457).
 
 ### How to install
 
