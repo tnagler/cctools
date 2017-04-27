@@ -12,15 +12,15 @@ kernel density estimator, see
 
 ### How to install
 
-   * The stable release from CRAN:
-    ``` r
-    install.packages("cctools")
-    ```
+* the stable release on CRAN:
+``` r
+install.packages("cctools")
+```
 
-   * The latest development version:
-    ``` r
-    devtools::install_github("tnagler/cctools")
-    ```
+* the latest development version:
+``` r
+devtools::install_github("tnagler/cctools")
+```
     
 ### Functions
 
