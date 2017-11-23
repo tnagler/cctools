@@ -25,7 +25,7 @@ test_that("bw parameter works", {
     expect_error(cckde(dat, bw = 0))
     expect_error(cckde(dat, bw = rep(0, 8)))
     bw <- rep(0.5, 8)
-    names(bw) <- expand_vec(names(dat), dat)
+    names(bw) <- expand_names(dat)
     new_fit <- cckde(dat, bw = bw)
     expect_equal(new_fit$bw, bw)
 })

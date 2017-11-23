@@ -34,7 +34,7 @@ expand_as_numeric <- function(x) {
     # which variables will be discrete in the output data frame?
     i_disc <- get_i_disc(x)
     # levels and names of expanded variables
-    new_names <- expand_vec(names(x), x)
+    new_names <- expand_names(x)
     new_levels <- expanded_levels(x)
 
     # ordered -> integer, factors -> dummy coding
@@ -113,7 +113,7 @@ expand_vec <- function(y, x) {
         # replicate number of level times y
         y <- sapply(seq_along(y), function(i) {
             if (is.factor(x[, i]) & !is.ordered(x[, i])) {
-                paste(y[i], levels(x[, i])[-1], sep = ".")
+                rep(y[i], length(levels(x[, i])) - 1)
             } else {
                 y[i]
             }
@@ -122,4 +122,33 @@ expand_vec <- function(y, x) {
     }
 
     y
+}
+
+#' Expands names for expand_as_numeric
+#'
+#' Expands each element according to the factor expansions of columns in
+#' [expand_as_numeric()].
+#'
+#' @param x as in [expand_as_numeric()].
+#'
+#' @return A vector of size `ncol(expand_as_numeric(x))`.
+#'
+#' @export
+expand_names <- function(x) {
+    nms <- names(x)
+    if (length(nms) == 1)
+        nms <- rep(nms, ncol(x))
+    if (length(nms) == ncol(x)) {
+        # replicate number of level times nms
+        nms <- sapply(seq_along(nms), function(i) {
+            if (is.factor(x[, i]) & !is.ordered(x[, i])) {
+                paste(nms[i], levels(x[, i])[-1], sep = ".")
+            } else {
+                nms[i]
+            }
+        })
+        nms <- unlist(nms)
+    }
+
+    nms
 }
