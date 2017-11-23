@@ -2,10 +2,10 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 eval_mvkde <- function(xev, x, b) {
-    .Call('cctools_eval_mvkde', PACKAGE = 'cctools', xev, x, b)
+    .Call(`_cctools_eval_mvkde`, xev, x, b)
 }
 
 lcv_mvkde_disc <- function(x, x_cc, b) {
-    .Call('cctools_lcv_mvkde_disc', PACKAGE = 'cctools', x, x_cc, b)
+    .Call(`_cctools_lcv_mvkde_disc`, x, x_cc, b)
 }
 

@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // eval_mvkde
 arma::vec eval_mvkde(const arma::mat& xev, const arma::mat& x, const arma::vec& b);
-RcppExport SEXP cctools_eval_mvkde(SEXP xevSEXP, SEXP xSEXP, SEXP bSEXP) {
+RcppExport SEXP _cctools_eval_mvkde(SEXP xevSEXP, SEXP xSEXP, SEXP bSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -21,7 +21,7 @@ END_RCPP
 }
 // lcv_mvkde_disc
 arma::vec lcv_mvkde_disc(const arma::mat& x, const arma::mat& x_cc, const arma::vec& b);
-RcppExport SEXP cctools_lcv_mvkde_disc(SEXP xSEXP, SEXP x_ccSEXP, SEXP bSEXP) {
+RcppExport SEXP _cctools_lcv_mvkde_disc(SEXP xSEXP, SEXP x_ccSEXP, SEXP bSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -31,4 +31,15 @@ BEGIN_RCPP
     rcpp_result_gen = Rcpp::wrap(lcv_mvkde_disc(x, x_cc, b));
     return rcpp_result_gen;
 END_RCPP
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_cctools_eval_mvkde", (DL_FUNC) &_cctools_eval_mvkde, 3},
+    {"_cctools_lcv_mvkde_disc", (DL_FUNC) &_cctools_lcv_mvkde_disc, 3},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_cctools(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }
