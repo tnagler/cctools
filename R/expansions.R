@@ -103,7 +103,7 @@ expanded_levels <- function(x) {
 #' @param y a vector of length 1 or `ncol(x)`.
 #' @param x as in [expand_as_numeric()].
 #'
-#' @return A vector of size `ncol(expand_as_numeric(x)`.
+#' @return A vector of size `ncol(expand_as_numeric(x))`.
 #'
 #' @export
 expand_vec <- function(y, x) {
@@ -113,7 +113,7 @@ expand_vec <- function(y, x) {
         # replicate number of level times y
         y <- sapply(seq_along(y), function(i) {
             if (is.factor(x[, i]) & !is.ordered(x[, i])) {
-                rep(y[i], length(levels(x[, i])) - 1)
+                paste(y[i], levels(x[, i])[-1], sep = ".")
             } else {
                 y[i]
             }
