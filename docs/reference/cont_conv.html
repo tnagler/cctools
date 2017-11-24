@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -120,7 +127,7 @@ Discrete variables are assumed to be integer-valued.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Nagler, T. (2017). <em>A generic approach to nonparametric function
-estimation with mixed data.</em> <a href = 'https://arxiv.org/pdf/1704.07457.pdf'>arXiv:1704.07457</a></p>
+estimation with mixed data.</em> <a href='https://arxiv.org/pdf/1704.07457.pdf'>arXiv:1704.07457</a></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -133,7 +140,7 @@ estimation with mixed data.</em> <a href = 'https://arxiv.org/pdf/1704.07457.pdf
     <span class='kw'>X2</span> <span class='kw'>=</span> <span class='fu'>rexp</span>(<span class='fl'>10</span>)
 )
 
-<span class='fu'>pairs</span>(<span class='no'>dat</span>)</div><img src='cont_conv-2.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>pairs</span>(<span class='fu'><a href='expand_as_numeric.html'>expand_as_numeric</a></span>(<span class='no'>dat</span>))  <span class='co'># expanded variables without noise</span></div><img src='cont_conv-4.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>pairs</span>(<span class='fu'>cont_conv</span>(<span class='no'>dat</span>))          <span class='co'># continuously convoluted data</span></div><img src='cont_conv-6.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>pairs</span>(<span class='no'>dat</span>)</div><div class='img'><img src='cont_conv-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>pairs</span>(<span class='fu'><a href='expand_as_numeric.html'>expand_as_numeric</a></span>(<span class='no'>dat</span>))  <span class='co'># expanded variables without noise</span></div><div class='img'><img src='cont_conv-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>pairs</span>(<span class='fu'>cont_conv</span>(<span class='no'>dat</span>))          <span class='co'># continuously convoluted data</span></div><div class='img'><img src='cont_conv-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
