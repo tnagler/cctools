@@ -1,5 +1,3 @@
-New submission.
-
 ## Test environments
 * ubuntu 14.04 (devel, release, oldrel) 
 * win-builder (release)
@@ -8,4 +6,5 @@ New submission.
 There were no ERRORs or WARNINGs. 
 
 ## Downstream dependencies
-No downstream dependencies yet.
+
+kdevine: 0 errors | 0 warnings | 0 notes
