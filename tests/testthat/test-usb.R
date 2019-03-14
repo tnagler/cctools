@@ -16,7 +16,7 @@ test_that("Simulation works", {
     expect_gt(max(abs(rusb(500, theta = 0.1))), 0.5)
 
     expect_lt(max(abs(rusb(500, theta = 0.99, nu = 10))), 1)
-    expect_gt(max(abs(rusb(500, theta = 0.99, nu = 1))), 0.95)
+    expect_gt(max(abs(rusb(500, theta = 0.99, nu = 1))), 0.94)
 
     expect_lt(max(abs(rusb(500, quasi = TRUE))), 0.5)
     expect_gt(max(abs(rusb(500, quasi = TRUE))), 0.48)
@@ -25,6 +25,6 @@ test_that("Simulation works", {
     expect_gt(max(abs(rusb(500, quasi = TRUE, theta = 0.1))), 0.5)
 
     expect_lt(max(abs(rusb(500, quasi = TRUE, theta = 0.99, nu = 10))), 1)
-    expect_gt(max(abs(rusb(500, quasi = TRUE, theta = 0.99, nu = 1))), 0.95)
+    expect_gt(max(abs(rusb(500, quasi = TRUE, theta = 0.99, nu = 1))), 0.94)
 })
 
