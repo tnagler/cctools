@@ -19,7 +19,7 @@ rusb(n, theta = 0, nu = 5, quasi = FALSE)
 \item{n}{number of observations.}
 
 \item{quasi}{logical indicating whether quasi random numbers
-(\code{\link[qrng:ghalton]{qrng::ghalton()}}) should be used for generating uniforms (which are then
+(\code{\link[qrng:qrng]{qrng::ghalton()}}) should be used for generating uniforms (which are then
 transformed by the quantile function)}
 }
 \description{
@@ -42,5 +42,5 @@ x <- rusb(100, theta = 0.3, nu = 0)
 }
 \references{
 Nagler, T. (2017). \emph{A generic approach to nonparametric function
-estimation with mixed data.} \href{https://arxiv.org/pdf/1704.07457.pdf}{arXiv:1704.07457}
+estimation with mixed data.} \href{https://arxiv.org/pdf/1704.07457}{arXiv:1704.07457}
 }

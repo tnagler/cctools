@@ -17,7 +17,7 @@ discrete variables.
 \description{
 Turns ordered variables into integers and expands factors as binary dummy
 codes. \code{\link[=cont_conv]{cont_conv()}} additionally adds noise to discrete variables, but this is only
-useful for estimation. \code{[cc_prepare()]} can be used to evaluate an already
+useful for estimation. \verb{[cc_prepare()]} can be used to evaluate an already
 fitted estimate.
 }
 \examples{

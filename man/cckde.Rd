@@ -62,5 +62,5 @@ predict(fit, dat)  # equivalent
 }
 \references{
 Nagler, T. (2017). \emph{A generic approach to nonparametric function
-estimation with mixed data.} \href{https://arxiv.org/pdf/1704.07457.pdf}{arXiv:1704.07457}
+estimation with mixed data.} \href{https://arxiv.org/pdf/1704.07457}{arXiv:1704.07457}
 }

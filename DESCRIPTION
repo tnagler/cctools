@@ -14,5 +14,5 @@ Imports:
     qrng
 LinkingTo: Rcpp, RcppArmadillo
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.1
+RoxygenNote: 7.3.2
 Suggests: testthat

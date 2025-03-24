@@ -1,5 +1,5 @@
 # cctools
-[![codecov.io](https://codecov.io/github/tnagler/cctools/coverage.svg?branch=master)](https://codecov.io/github/tnagler/cctools?branch=master)
+[![codecov.io](https://codecov.io/github/tnagler/cctools/coverage.svg?branch=master)](https://app.codecov.io/github/tnagler/cctools?branch=master)
 [![CRAN version](https://www.r-pkg.org/badges/version/cctools)](https://CRAN.R-project.org/package=cctools)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -37,5 +37,5 @@ For a detailed description, see the
 
 Nagler, T. (2017). *A generic approach to nonparametric function estimation
 with mixed data.*
-[arXiv:1704.07457](https://arxiv.org/pdf/1704.07457.pdf)
+[arXiv:1704.07457](https://arxiv.org/pdf/1704.07457)
 

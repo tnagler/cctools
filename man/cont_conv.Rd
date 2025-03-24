@@ -17,7 +17,7 @@ continuous convolution (default parameters correspond to the \eqn{U[-0.5,
   0.5]} distribution).}
 
 \item{quasi}{logical indicating whether quasi random numbers sholuld be used
-(\code{\link[qrng:ghalton]{qrng::ghalton()}}); only works for \code{theta = 0}.}
+(\code{\link[qrng:qrng]{qrng::ghalton()}}); only works for \code{theta = 0}.}
 }
 \value{
 A data frame with noise added to each discrete variable (ordered
@@ -49,5 +49,5 @@ pairs(cont_conv(dat))          # continuously convoluted data
 }
 \references{
 Nagler, T. (2017). \emph{A generic approach to nonparametric function
-estimation with mixed data.} \href{https://arxiv.org/pdf/1704.07457.pdf}{arXiv:1704.07457}
+estimation with mixed data.} \href{https://arxiv.org/pdf/1704.07457}{arXiv:1704.07457}
 }
