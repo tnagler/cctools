@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // eval_mvkde
 arma::vec eval_mvkde(const arma::mat& xev, const arma::mat& x, const arma::vec& b);
 RcppExport SEXP _cctools_eval_mvkde(SEXP xevSEXP, SEXP xSEXP, SEXP bSEXP) {
